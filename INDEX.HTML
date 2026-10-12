@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .form-control {
+            background-color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Emotion Analysis</h1>
+        <form method="POST" action="{{ url_for('analyze_sentiment') }}">
+            <div class="form-group">
+                <label for="comment">Enter your comment:</label>
+                <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+
+        {% if sentiment is defined %}
+            <div class="mt-4">
+                {% if sentiment == 'joy' %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Joy! 😄</strong> This is a joyful/positive comment.
+                    </div>
+                {% elif sentiment == 'sadness' %}
+                    <div class="alert alert-info" role="alert">
+                        <strong>Sadness. 😢</strong> This is a sad comment.
+                    </div>
+                {% elif sentiment == 'anger' %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Anger! 😠</strong> This is an angry comment.
+                    </div>
+                {% elif sentiment == 'fear' %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Fear. 😨</strong> This is a fearful comment.
+                    </div>
+                {% elif sentiment == 'neutral' %}
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>Neutral. 😐</strong> This is a neutral comment.
+                    </div>
+                {% else %}
+                    <div class="alert alert-dark" role="alert">
+                        Predicted emotion: {{ sentiment }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
